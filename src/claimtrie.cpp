@@ -1671,17 +1671,8 @@ bool CClaimTrieCache::removeClaim(const std::string& name, const COutPoint& outP
 
 void CClaimTrieCache::addToExpirationQueue(int nExpirationHeight, nameOutPointType& entry) const
 {
-    // NOTE: To disable expiration completely after fork, set this define to enable check
-    // #define CLAIM_EXPIRATION_DISABLED_AFTER_FORK
-    #ifdef CLAIM_EXPIRATION_DISABLED_AFTER_FORK
-    const Consensus::Params& consensusParams = Params().GetConsensus();
-    if ((nExpirationHeight < consensusParams.nExtendedClaimExpirationForkHeight) ||
-        (base->nCurrentHeight < consensusParams.nExtendedClaimExpirationForkHeight))
-    #endif
-    {
-        expirationQueueType::iterator itQueueRow = getExpirationQueueCacheRow(nExpirationHeight, true);
-        itQueueRow->second.push_back(entry);
-    }
+    expirationQueueType::iterator itQueueRow = getExpirationQueueCacheRow(nExpirationHeight, true);
+    itQueueRow->second.push_back(entry);
 }
 
 void CClaimTrieCache::removeFromExpirationQueue(const std::string& name, const COutPoint& outPoint, int nHeight) const
