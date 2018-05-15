@@ -132,8 +132,8 @@ public:
         consensus.nPowTargetTimespan = 150; //retarget every block
         consensus.nPowTargetSpacing = 150;
         consensus.nOriginalClaimExpirationTime = 262974;
-        consensus.nExtendedClaimExpirationTime = 262974;
-        consensus.nExtendedClaimExpirationForkHeight = -1; // FIXME: pick a real height
+        consensus.nExtendedClaimExpirationTime = 2102400;
+        consensus.nExtendedClaimExpirationForkHeight = 400155; // FIXME: pick a real height
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 1916; // 95% of 2016
@@ -219,8 +219,8 @@ public:
         consensus.nPowTargetTimespan = 150;
         consensus.nPowTargetSpacing = 150;
         consensus.nOriginalClaimExpirationTime = 262974;
-        consensus.nExtendedClaimExpirationTime = 262974;
-        consensus.nExtendedClaimExpirationForkHeight = -1; // FIXME: pick a real height
+        consensus.nExtendedClaimExpirationTime = 2102400;
+        consensus.nExtendedClaimExpirationForkHeight = 400155;
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
