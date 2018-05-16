@@ -2605,7 +2605,7 @@ bool CClaimTrieCache::forkForExpirationChange(bool increment) const
 {
     /*
     If increment is True, we have forked to extend the expiration time, thus items in the expiration queue
-    will have their expiration extended by "new expiration time - original expiraiton time"
+    will have their expiration extended by "new expiration time - original expiration time"
 
     If increment is False, we are decremented a block to reverse the fork. Thus items in the expiration queue
     will have their expiration extension removed.
@@ -2631,7 +2631,7 @@ bool CClaimTrieCache::forkForExpirationChange(bool increment) const
     }
 
 
-    //look through db for expiration queues, if we haven't already found it in dirty expiraiton queue
+    //look through db for expiration queues, if we haven't already found it in dirty expiration queue
     boost::scoped_ptr<CDBIterator> pcursor(const_cast<CDBWrapper*>(&base->db)->NewIterator());
     pcursor->SeekToFirst();
     while (pcursor->Valid())

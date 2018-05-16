@@ -2175,7 +2175,7 @@ bool DisconnectBlock(const CBlock& block, CValidationState& state, const CBlockI
                         std::string value(vvchParams[1].begin(), vvchParams[1].end());
                         claimId = ClaimIdHash(hash, i);
                         LogPrintf("--- %s[%lu]: OP_CLAIM_NAME \"%s\" = \"%s\" with claimId %s and tx prevout %s at index %d\n",
-                                  __func__, view.AccessCoins(hash)->nHeight, name, SanitizeString(value),
+                                  __func__, pindex->nHeight, name, SanitizeString(value),
                                   claimId.GetHex(), hash.ToString(), i);
                     }
                     else if (op == OP_UPDATE_CLAIM)
@@ -2185,7 +2185,7 @@ bool DisconnectBlock(const CBlock& block, CValidationState& state, const CBlockI
                         std::string value(vvchParams[1].begin(), vvchParams[1].end());
                         claimId = uint160(vvchParams[1]);
                         LogPrintf("--- %s[%lu]: OP_UPDATE_CLAIM \"%s\" = \"%s\" with claimId %s and tx prevout %s at index %d\n",
-                                  __func__, view.AccessCoins(hash)->nHeight, name, SanitizeString(value),
+                                  __func__, pindex->nHeight, name, SanitizeString(value),
                                   claimId.GetHex(), hash.ToString(), i);
                     }
                     std::string name(vvchParams[0].begin(), vvchParams[0].end());
@@ -2201,7 +2201,7 @@ bool DisconnectBlock(const CBlock& block, CValidationState& state, const CBlockI
                     std::string name(vvchParams[0].begin(), vvchParams[0].end());
                     uint160 supportedClaimId(vvchParams[1]);
                     LogPrintf("--- %s[%lu]: OP_SUPPORT_CLAIM \"%s\" with claimId %s and tx prevout %s at index %d\n",
-                              __func__, view.AccessCoins(hash)->nHeight, name, supportedClaimId.GetHex(), hash.ToString(), i);
+                              __func__, pindex->nHeight, name, supportedClaimId.GetHex(), hash.ToString(), i);
                     LogPrintf("%s: (txid: %s, nOut: %d) Removing support for claim id %s on %s due to its block being disconnected\n", __func__, hash.ToString(), i, supportedClaimId.ToString(), name.c_str());
                     if (!trieCache.undoAddSupport(name, COutPoint(hash, i), pindex->nHeight))
                         LogPrintf("%s: Something went wrong removing support for name %s in hash %s\n", __func__, name.c_str(), hash.ToString());
@@ -2234,7 +2234,7 @@ bool DisconnectBlock(const CBlock& block, CValidationState& state, const CBlockI
     assert(trieCache.getMerkleHash() == pindex->pprev->hashClaimTrie);
     if (pindex->nHeight == Params().GetConsensus().nExtendedClaimExpirationForkHeight)
     {
-        LogPrintf("Decremented past the fork v13 fork height");
+        LogPrintf("Decremented past the extended claim expiration hard fork height");
         pclaimTrie->setExpirationTime(Params().GetConsensus().GetExpirationTime(pindex->nHeight-1));
         trieCache.forkForExpirationChange(false);
     }
@@ -2503,7 +2503,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     // v 13 LBRYcrd hard fork to extend expiration time
     if (pindex->nHeight == Params().GetConsensus().nExtendedClaimExpirationForkHeight)
     {
-        LogPrintf("Incremented past the fork v13 fork height");
+        LogPrintf("Incremented past the extended claim expiration hard fork height");
         pclaimTrie->setExpirationTime(chainparams.GetConsensus().GetExpirationTime(pindex->nHeight));
         trieCache.forkForExpirationChange(true);
     }
@@ -2605,7 +2605,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
                             std::string value(vvchParams[1].begin(), vvchParams[1].end());
                             claimId = ClaimIdHash(txin.prevout.hash, txin.prevout.n);
                             LogPrintf("+++ %s[%lu]: OP_CLAIM_NAME \"%s\" = \"%s\" with claimId %s and tx prevout %s at index %d\n",
-                                      __func__, view.AccessCoins(txin.prevout.hash)->nHeight, name, SanitizeString(value),
+                                      __func__, pindex->nHeight, name, SanitizeString(value),
                                       claimId.GetHex(), txin.prevout.hash.GetHex(), txin.prevout.n);
                         }
                         else if (op == OP_UPDATE_CLAIM)
@@ -2615,7 +2615,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
                             std::string value(vvchParams[1].begin(), vvchParams[1].end());
                             claimId = uint160(vvchParams[1]);
                             LogPrintf("+++ %s[%lu]: OP_UPDATE_CLAIM \"%s\" = \"%s\" with claimId %s and tx prevout %s at index %d\n",
-                                      __func__, view.AccessCoins(txin.prevout.hash)->nHeight, name, SanitizeString(value),
+                                      __func__, pindex->nHeight, name, SanitizeString(value),
                                       claimId.GetHex(), txin.prevout.hash.GetHex(), txin.prevout.n);
                         }
                         std::string name(vvchParams[0].begin(), vvchParams[0].end());
@@ -2634,7 +2634,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
                         std::string name(vvchParams[0].begin(), vvchParams[0].end());
                         uint160 supportedClaimId(vvchParams[1]);
                         LogPrintf("+++ %s[%lu]: OP_SUPPORT_CLAIM \"%s\" with claimId %s and tx prevout %s at index %d\n",
-                                  __func__, view.AccessCoins(txin.prevout.hash)->nHeight, name,
+                                  __func__, pindex->nHeight, name,
                                   supportedClaimId.GetHex(), txin.prevout.hash.GetHex(), txin.prevout.n);
                         int nValidAtHeight;
                         LogPrintf("%s: Removing support for %s in %s. Tx: %s, nOut: %d, removed txid: %s\n", __func__, supportedClaimId.ToString(), name, txin.prevout.hash.ToString(), txin.prevout.n,tx.GetHash().ToString());

@@ -18,7 +18,6 @@
 #include <iostream>
 #include "test/test_bitcoin.h"
 
-
 using namespace std;
 
 
@@ -181,9 +180,6 @@ struct ClaimTrieChainFixture{
         num_txs_for_next_block = 0;
         num_txs = 0; 
         coinbase_txs_used = 0;
-
-
-
         // generate coinbases to spend 
         CreateCoinbases(20,coinbase_txs); 
     }
@@ -316,7 +312,7 @@ struct ClaimTrieChainFixture{
     void WriteClearReadClaimTrie()
     {
         // this will simulate restart of lbrycrdd by writing the claimtrie to disk,
-        // clearing the-in memory claimtrie, and then reading it the saved claimtrie
+        // clearing the-in memory claimtrie, and then reading the saved claimtrie
         // from disk
         pclaimTrie->WriteToDisk();
         pclaimTrie->clear();
