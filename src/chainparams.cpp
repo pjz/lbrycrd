@@ -220,7 +220,7 @@ public:
         consensus.nPowTargetSpacing = 150;
         consensus.nOriginalClaimExpirationTime = 262974;
         consensus.nExtendedClaimExpirationTime = 2102400;
-        consensus.nExtendedClaimExpirationForkHeight = 400155;
+        consensus.nExtendedClaimExpirationForkHeight = 278160;
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
