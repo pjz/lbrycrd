@@ -1002,7 +1002,7 @@ BOOST_AUTO_TEST_CASE(claimtriebranching_hardfork_disktest)
     fixture.IncrementBlocks(fixture.expirationForkHeight - chainActive.Height());
     BOOST_CHECK(is_best_claim("test2", u2));
     BOOST_CHECK(best_claim_effective_amount_equals("test2",2));
-    // increment to original expiraiton, should not be expired
+    // increment to original expiration, should not be expired
     fixture.IncrementBlocks(fixture.originalExpiration - height_of_update_before_expiration);
     BOOST_CHECK(is_best_claim("test2", u2));
     BOOST_CHECK(best_claim_effective_amount_equals("test2",2));
